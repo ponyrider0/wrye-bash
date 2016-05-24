@@ -37,6 +37,33 @@ from bolt import BoltError, AbstractError, GPath, deprint
 from balt import askSave, askOpen, askWarning, showError, showWarning, \
     showInfo, Link, BusyCursor
 
+def init_settings_files():
+    game, dirs = bush.game.fsName, bass.dirs
+    (
+    (dirs['mopy'],                      u'bash.ini',             game+u'\\Mopy'),
+    (dirs['mods'].join(u'Bash'),        u'Table',                game+u'\\Data\\Bash'),
+    (dirs['mods'].join(u'Docs'),        u'Bash Readme Template.txt', game+u'\\Data\\Docs'),
+    (dirs['mods'].join(u'Docs'),        u'Bash Readme Template.html', game+u'\\Data\\Docs'),
+    (dirs['mods'].join(u'Docs'),        u'My Readme Template.txt', game+u'\\Data\\Docs'),
+    (dirs['mods'].join(u'Docs'),        u'My Readme Template.html', game+u'\\Data\\Docs'),
+    (dirs['mods'].join(u'Docs'),        u'Bashed Lists',         game+u'\\Data\\Docs'),
+    (dirs['mods'].join(u'Docs'),        u'wtxt_sand_small.css',  game+u'\\Data\\Docs'),
+    (dirs['mods'].join(u'Docs'),        u'wtxt_teal.css',        game+u'\\Data\\Docs'),
+    (dirs['modsBash'],                  u'Table.dat',                game+u' Mods\\Bash Mod Data'),
+    (dirs['modsBash'].join(u'INI Data'),u'Table.dat',                game+u' Mods\\Bash Mod Data\\INI Data'),
+    (dirs['bainData'],                  u'Converters.dat',           game+u' Mods\\Bash Installers\\Bash'),
+    (dirs['bainData'],                  u'Installers.dat',           game+u' Mods\\Bash Installers\\Bash'),
+    (dirs['userApp'],                   u'Profiles',             u'LocalAppData\\'+game),
+    (dirs['userApp'],                   u'bash config',          u'LocalAppData\\'+game),
+    (dirs['saveBase'],                  u'BashProfiles.dat',         u'My Games\\'+game),
+    (dirs['saveBase'],                  u'BashSettings.dat',         u'My Games\\'+game),
+    (dirs['saveBase'],                  u'BashLoadOrders.dat',       u'My Games\\'+game),
+    (dirs['saveBase'],                  u'ModeBase',             u'My Games\\'+game),
+    (dirs['saveBase'],                  u'People.dat',               u'My Games\\'+game),
+    )
+
+
+
 #------------------------------------------------------------------------------
 class BackupCancelled(BoltError):
 # user cancelled operation
