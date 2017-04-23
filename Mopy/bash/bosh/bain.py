@@ -746,9 +746,9 @@ class Installer(object):
         #--Update dirty?
         if self.isActive and data_sizeCrc != old_sizeCrc:
             dirty_sizeCrc = self.dirty_sizeCrc
-            for file,sizeCrc in old_sizeCrc.iteritems():
-                if file not in dirty_sizeCrc and sizeCrc != data_sizeCrc.get(file):
-                    dirty_sizeCrc[file] = sizeCrc
+            for filename,sizeCrc in old_sizeCrc.iteritems():
+                if filename not in dirty_sizeCrc and sizeCrc != data_sizeCrc.get(filename):
+                    dirty_sizeCrc[filename] = sizeCrc
         #--Done (return dest_src for install operation)
         return dest_src
 
@@ -889,28 +889,28 @@ class Installer(object):
         if self.type == 0:
             status = -20
         elif data_sizeCrc:
-            for file,sizeCrc in data_sizeCrc.iteritems():
-                sizeCrcDate = data_sizeCrcDate.get(file)
+            for filename,sizeCrc in data_sizeCrc.iteritems():
+                sizeCrcDate = data_sizeCrcDate.get(filename)
                 if not sizeCrcDate:
-                    missing.add(file)
+                    missing.add(filename)
                 elif sizeCrc != sizeCrcDate[:2]:
-                    mismatched.add(file)
-                    if not os.path.split(file)[0] and bass.reModExt.search(file):
-                        misEspmed.add(file)
-                if sizeCrc == abnorm_sizeCrc.get(file):
-                    underrides.add(file)
+                    mismatched.add(filename)
+                    if not os.path.split(filename)[0] and bass.reModExt.search(filename):
+                        misEspmed.add(filename)
+                if sizeCrc == abnorm_sizeCrc.get(filename):
+                    underrides.add(filename)
             if missing: status = -10
             elif misEspmed: status = 10
             elif mismatched: status = 20
             else: status = 30
         #--Clean Dirty
         dirty_sizeCrc = self.dirty_sizeCrc
-        for file,sizeCrc in dirty_sizeCrc.items():
-            sizeCrcDate = data_sizeCrcDate.get(file)
+        for filename,sizeCrc in dirty_sizeCrc.items():
+            sizeCrcDate = data_sizeCrcDate.get(filename)
             if (not sizeCrcDate or sizeCrc != sizeCrcDate[:2] or
-                sizeCrc == data_sizeCrc.get(file)
+                sizeCrc == data_sizeCrc.get(filename)
                 ):
-                del dirty_sizeCrc[file]
+                del dirty_sizeCrc[filename]
         #--Done
         (self.status,oldStatus) = (status,self.status)
         (self.underrides,oldUnderrides) = (underrides,self.underrides)
@@ -1874,8 +1874,7 @@ class InstallersData(DataStore):
 
     def refreshNorm(self):
         """Refresh self.abnorm_sizeCrc."""
-        active_sorted = sorted([x for x in self.itervalues() if x.isActive],
-                               key=attrgetter('order'))
+        active_sorted = (x for x in self.sorted_values() if x.isActive)
         #--norm
         norm_sizeCrc = bolt.LowerDict()
         for package in active_sorted:
@@ -2392,10 +2391,10 @@ class InstallersData(DataStore):
             #--Uninstall archive?
             if archive in unArchives:
                 for data_sizeCrc in (installer.data_sizeCrc,installer.dirty_sizeCrc):
-                    for file,sizeCrc in data_sizeCrc.iteritems():
-                        sizeCrcDate = data_sizeCrcDate.get(file)
-                        if file not in masked and sizeCrcDate and sizeCrcDate[:2] == sizeCrc:
-                            removes.add(file)
+                    for cistr_file,sizeCrc in data_sizeCrc.iteritems():
+                        sizeCrcDate = data_sizeCrcDate.get(cistr_file)
+                        if cistr_file not in masked and sizeCrcDate and sizeCrcDate[:2] == sizeCrc:
+                            removes.add(cistr_file)
             #--Other active archive. May undo previous removes, or provide a restore file.
             #  And/or may block later uninstalls.
             elif installer.isActive:
