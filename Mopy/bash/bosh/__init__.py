@@ -1965,7 +1965,9 @@ class ModInfos(FileInfos):
         if scanList:
             self.rescanMergeable(scanList)
         hasChanged += bool(scanList or difMergeable)
-        return bool(hasChanged) or lo_changed
+        changed = bool(hasChanged) or lo_changed
+        if not changed: return changed
+        return _added, _updated, deleted
 
     _plugin_inis = OrderedDict() # cache active mod inis in active mods order
     def _refresh_mod_inis(self):

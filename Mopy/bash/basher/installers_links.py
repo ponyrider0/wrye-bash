@@ -85,8 +85,14 @@ class Installers_MonitorInstall(Installers_Link):
         bosh.bsaInfos.refresh() # TODO: add bsas to BAIN refresh
         with load_order.Unlock():
             mods_changed = bosh.modInfos.refresh()
+        mods = set()
+        if mods_changed:
+            mods.update(*[x for x in mods_changed])
         inis_changed = bosh.iniInfos.refresh()
-        ui_refresh = map(bool, [mods_changed, inis_changed])
+        inis = set()
+        if inis_changed:
+            inis.update(*[x for x in inis_changed[:3]])
+        ui_refresh = [mods, inis]
         self.iPanel.ShowPanel(canCancel=False, scan_data_dir=True)
         # Determine changes
         curData = self.idata.data_sizeCrcDate
@@ -188,7 +194,7 @@ class Installers_AnnealAll(Installers_Link):
     @balt.conversation
     def Execute(self):
         """Anneal all packages."""
-        ui_refresh = [False, False]
+        ui_refresh = [set(), set()]
         try:
             with balt.Progress(_(u"Annealing..."),u'\n'+u' '*60) as progress:
                 self.idata.bain_anneal(None, ui_refresh, progress=progress)
@@ -204,7 +210,7 @@ class Installers_UninstallAllPackages(Installers_Link):
     def Execute(self):
         """Uninstall all packages."""
         if not self._askYes(_(u"Really uninstall All Packages?")): return
-        ui_refresh = [False, False]
+        ui_refresh = [set(), set()]
         try:
             with balt.Progress(_(u"Uninstalling..."),u'\n'+u' '*60) as progress:
                 self.idata.bain_uninstall('ALL', ui_refresh, progress=progress)
@@ -253,7 +259,7 @@ class Installers_UninstallAllUnknownFiles(Installers_Link):
     @balt.conversation
     def Execute(self):
         if not self._askYes(self.fullMessage): return
-        ui_refresh = [False, False]
+        ui_refresh = [set(), set()]
         try:
             with balt.Progress(_(u"Cleaning Data Files..."),u'\n' + u' ' * 65):
                 self.idata.clean_data_dir(ui_refresh)
