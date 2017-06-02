@@ -3723,7 +3723,8 @@ class BashFrame(wx.Frame):
             title += u', CBash %s: ' % (CBashApi.VersionText,)
         else:
             title += u': '
-        maProfile = re.match(ur'Saves\\(.+)\\$',bosh.saveInfos.localSave,re.U)
+        maProfile = re.match(ur'Saves%s(.+?)%s?$' % (os.sep, os.sep),
+                             bosh.saveInfos.localSave,re.U)
         if maProfile:
             title += maProfile.group(1)
         else:

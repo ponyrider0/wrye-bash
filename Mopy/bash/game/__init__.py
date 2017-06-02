@@ -22,6 +22,7 @@
 #
 # =============================================================================
 """Constants and classes to define for each new game - still a WIP."""
+from os.path import join as _j
 
 from .. import brec
 # from .constants import * # TODO(ut): create a .constants module
@@ -182,10 +183,11 @@ wryeBashDataFiles = {u'Bashed Patch.esp', u'Bashed Patch, 0.esp',
                      u'Bashed Patch, Warrior.esp', u'Bashed Patch, Thief.esp',
                      u'Bashed Patch, Mage.esp', u'Bashed Patch, Test.esp',
                      u'ArchiveInvalidationInvalidated!.bsa',
-                     u'Docs\\Bash Readme Template.html',
-                     u'Docs\\wtxt_sand_small.css', u'Docs\\wtxt_teal.css',
-                     u'Docs\\Bash Readme Template.txt'}
-wryeBashDataDirs = {u'Bash Patches\\', u'INI Tweaks\\'}
+                     _j(u'Docs', u'Bash Readme Template.html'),
+                     _j(u'Docs', u'wtxt_sand_small.css'),
+                     _j(u'Docs', u'wtxt_teal.css'),
+                     _j(u'Docs', u'Bash Readme Template.txt')}
+wryeBashDataDirs = {u'Bash Patches', u'INI Tweaks'}
 ignoreDataFiles = set()
 ignoreDataFilePrefixes = set()
 ignoreDataDirs = set()
@@ -240,7 +242,7 @@ class RecordHeader(brec.BaseRecordHeader):
         pass
 
 #--The pickle file for this game.  Holds encoded GMST IDs from the big list below
-pklfile = ur'bash\db\*GAMENAME*_ids.pkl'
+pklfile = _j(u'bash', u'db', u'*GAMENAME*_ids.pkl')
 
 #--Bash Tags supported by this game
 allTags = sorted(())

@@ -25,6 +25,7 @@
 """Rollback library."""
 
 import cPickle
+from os.path import join as _j
 
 import archives
 import bash
@@ -79,23 +80,23 @@ class BackupSettings(BaseBackupSettings):
         BaseBackupSettings.__init__(self, parent, path, do_quit)
         game, dirs = bush.game.fsName, bass.dirs
         for path, name, tmpdir in (
-              (dirs['mopy'],                      u'bash.ini',             game+u'\\Mopy'),
-              (dirs['mods'].join(u'Bash'),        u'Table',                game+u'\\Data\\Bash'),
-              (dirs['mods'].join(u'Docs'),        u'Bash Readme Template', game+u'\\Data\\Docs'),
-              (dirs['mods'].join(u'Docs'),        u'Bashed Lists',         game+u'\\Data\\Docs'),
-              (dirs['mods'].join(u'Docs'),        u'wtxt_sand_small.css',  game+u'\\Data\\Docs'),
-              (dirs['mods'].join(u'Docs'),        u'wtxt_teal.css',        game+u'\\Data\\Docs'),
-              (dirs['modsBash'],                  u'Table',                game+u' Mods\\Bash Mod Data'),
-              (dirs['modsBash'].join(u'INI Data'),u'Table',                game+u' Mods\\Bash Mod Data\\INI Data'),
-              (dirs['bainData'],                  u'Converters',           game+u' Mods\\Bash Installers\\Bash'),
-              (dirs['bainData'],                  u'Installers',           game+u' Mods\\Bash Installers\\Bash'),
-              (dirs['userApp'],                   u'Profiles',             u'LocalAppData\\'+game),
-              (dirs['userApp'],                   u'bash config',          u'LocalAppData\\'+game),
-              (dirs['saveBase'],                  u'BashProfiles',         u'My Games\\'+game),
-              (dirs['saveBase'],                  u'BashSettings',         u'My Games\\'+game),
-              (dirs['saveBase'],                  u'BashLoadOrders',       u'My Games\\'+game),
-              (dirs['saveBase'],                  u'ModeBase',             u'My Games\\'+game),
-              (dirs['saveBase'],                  u'People',               u'My Games\\'+game),
+              (dirs['mopy'],                      u'bash.ini',             _j(game, u'Mopy')),
+              (dirs['mods'].join(u'Bash'),        u'Table',                _j(game, u'Data', u'Bash')),
+              (dirs['mods'].join(u'Docs'),        u'Bash Readme Template', _j(game, u'Data', u'Docs')),
+              (dirs['mods'].join(u'Docs'),        u'Bashed Lists',         _j(game, u'Data', u'Docs')),
+              (dirs['mods'].join(u'Docs'),        u'wtxt_sand_small.css',  _j(game, u'Data', u'Docs')),
+              (dirs['mods'].join(u'Docs'),        u'wtxt_teal.css',        _j(game, u'Data', u'Docs')),
+              (dirs['modsBash'],                  u'Table',                _j(game+u' Mods', u'Bash Mod Data')),
+              (dirs['modsBash'].join(u'INI Data'),u'Table',                _j(game+u' Mods', u'Bash Mod Data', u'INI Data')),
+              (dirs['bainData'],                  u'Converters',           _j(game+u' Mods', u'Bash Installers', u'Bash')),
+              (dirs['bainData'],                  u'Installers',           _j(game+u' Mods', u'Bash Installers', u'Bash')),
+              (dirs['userApp'],                   u'Profiles',             _j(u'LocalAppData', game)),
+              (dirs['userApp'],                   u'bash config',          _j(u'LocalAppData', game)),
+              (dirs['saveBase'],                  u'BashProfiles',         _j(u'My Games', game)),
+              (dirs['saveBase'],                  u'BashSettings',         _j(u'My Games', game)),
+              (dirs['saveBase'],                  u'BashLoadOrders',       _j(u'My Games', game)),
+              (dirs['saveBase'],                  u'ModeBase',             _j(u'My Games', game)),
+              (dirs['saveBase'],                  u'People',               _j(u'My Games', game)),
                 ):
             tmpdir = GPath(tmpdir)
             for ext in (u'',u'.dat',u'.pkl',u'.html',u'.txt'): # hack so the above file list can be shorter, could include rogue files but not very likely
@@ -106,9 +107,9 @@ class BackupSettings(BaseBackupSettings):
 
         #backup all files in Mopy\Data, Data\Bash Patches\ and Data\INI Tweaks
         for path, tmpdir in (
-              (dirs['l10n'],                      game+u'\\Mopy\\bash\\l10n'),
-              (dirs['mods'].join(u'Bash Patches'),game+u'\\Data\\Bash Patches'),
-              (dirs['mods'].join(u'INI Tweaks'),  game+u'\\Data\\INI Tweaks'),
+              (dirs['l10n'],                       _j(game, u'Mopy', u'bash', u'l10n')),
+              (dirs['mods'].join(u'Bash Patches'), _j(game, u'Data', u'Bash Patches')),
+              (dirs['mods'].join(u'INI Tweaks'),   _j(game, u'Data', u'INI Tweaks')),
                 ):
             tmpdir = GPath(tmpdir)
             for name in path.list():
@@ -122,7 +123,7 @@ class BackupSettings(BaseBackupSettings):
             return True
         if backup_images: # 1 is changed images only, 2 is all images
             onlyChanged = backup_images == 1
-            tmpdir = GPath(game+u'\\Mopy\\bash\\images')
+            tmpdir = GPath(_j(game, u'Mopy', u'bash', u'images'))
             path = dirs['images']
             for name in path.list():
                 fullname = path.join(name)
@@ -131,7 +132,7 @@ class BackupSettings(BaseBackupSettings):
                     self.files[tmpdir.join(name)] = fullname
 
         #backup save profile settings
-        savedir = GPath(u'My Games\\'+game)
+        savedir = GPath(_j(u'My Games', game))
         profiles = [u''] + bosh.SaveInfos.getLocalSaveDirs()
         for profile in profiles:
             pluginsTxt = (u'Saves', profile, u'plugins.txt')
@@ -240,7 +241,7 @@ class RestoreSettings(BaseBackupSettings):
 
         # reinitialize bass.dirs using the backup copy of bash.ini if it exists
         game, dirs = bush.game.fsName, bass.dirs
-        tmpBash = temp_dir.join(game+u'\\Mopy\\bash.ini')
+        tmpBash = temp_dir.join(game, u'Mopy', u'bash.ini')
         opts = bash.opts
 
         bash.SetUserPath(tmpBash.s,opts.userPath)
@@ -250,30 +251,30 @@ class RestoreSettings(BaseBackupSettings):
 
         # restore all the settings files
         restore_paths = (
-                (dirs['mopy'],                      game+u'\\Mopy'),
-                (dirs['mods'].join(u'Bash'),        game+u'\\Data\\Bash'),
-                (dirs['mods'].join(u'Bash Patches'),game+u'\\Data\\Bash Patches'),
-                (dirs['mods'].join(u'Docs'),        game+u'\\Data\\Docs'),
-                (dirs['mods'].join(u'INI Tweaks'),  game+u'\\Data\\INI Tweaks'),
-                (dirs['modsBash'],                  game+u' Mods\\Bash Mod Data'),
-                (dirs['modsBash'].join(u'INI Data'),game+u' Mods\\Bash Mod Data\\INI Data'),
-                (dirs['bainData'],                  game+u' Mods\\Bash Installers\\Bash'),
-                (dirs['userApp'],                   u'LocalAppData\\'+game),
-                (dirs['saveBase'],                  u'My Games\\'+game),
+                (dirs['mopy'],                      _j(game, u'Mopy')),
+                (dirs['mods'].join(u'Bash'),        _j(game, u'Data', u'Bash')),
+                (dirs['mods'].join(u'Bash Patches'),_j(game, u'Data', u'Bash Patches')),
+                (dirs['mods'].join(u'Docs'),        _j(game, u'Data', u'Docs')),
+                (dirs['mods'].join(u'INI Tweaks'),  _j(game, u'Data', u'INI Tweaks')),
+                (dirs['modsBash'],                  _j(game+u' Mods', u'Bash Mod Data')),
+                (dirs['modsBash'].join(u'INI Data'),_j(game+u' Mods', u'Bash Mod Data', u'INI Data')),
+                (dirs['bainData'],                  _j(game+u' Mods', u'Bash Installers', u'Bash')),
+                (dirs['userApp'],                   _j(u'LocalAppData', game)),
+                (dirs['saveBase'],                  _j(u'My Games', game)),
                 )
         if 293 >= self.verApp:
             # restore from old data paths
             restore_paths += (
-                (dirs['l10n'],                      game+u'\\Data'),)
+                (dirs['l10n'],                      _j(game, u'Data')),)
             if self.restore_images:
                 restore_paths += (
-                    (dirs['images'],                game+u'\\Mopy\\images'),)
+                    (dirs['images'],                _j(game, u'Mopy', u'images')),)
         else:
             restore_paths += (
-                (dirs['l10n'],                      game+u'\\bash\\l10n'),)
+                (dirs['l10n'],                      _j(game, u'bash', u'l10n')),)
             if self.restore_images:
                 restore_paths += (
-                    (dirs['images'],                game+u'\\Mopy\\bash\\images'),)
+                    (dirs['images'],                _j(game, u'Mopy', u'bash', u'images')),)
         for fpath, tpath in restore_paths:
             path = temp_dir.join(tpath)
             if path.exists():
@@ -284,7 +285,7 @@ class RestoreSettings(BaseBackupSettings):
                         path.join(name).copyTo(fpath.join(name))
 
         #restore savegame profile settings
-        tpath = GPath(u'My Games\\'+game+u'\\Saves')
+        tpath = GPath(_j(u'My Games', game, u'Saves'))
         fpath = dirs['saveBase'].join(u'Saves')
         path = temp_dir.join(tpath)
         if path.exists():

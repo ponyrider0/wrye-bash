@@ -2650,12 +2650,14 @@ class SaveInfos(FileInfos):
         # saveInfos singleton is constructed in InitData after bosh.oblivionIni
         self.localSave = oblivionIni.getSetting(
             bush.game.saveProfilesKey[0], bush.game.saveProfilesKey[1],
-            u'Saves\\')
+            u'Saves')
         # Hopefully will solve issues with unicode usernames # TODO(ut) test
         self.localSave = decode(self.localSave) # encoding = 'cp1252' ?
+        if os.name == 'posix':
+            self.localSave = self.localSave.replace('\\', '/')
 
     def __init__(self):
-        self.localSave = u'Saves\\'
+        self.localSave = u'Saves'
         self._setLocalSaveFromIni()
         super(SaveInfos, self).__init__(dirs['saveBase'].join(self.localSave),
                                         SaveInfo)
@@ -3022,7 +3024,8 @@ def initDirs(bashIni, personal, localAppData):
             # Set the save game folder to the Oblivion directory
             dirs['saveBase'] = dirs['app']
             # Set the data folder to sLocalMasterPath
-            dirs['mods'] = dirs['app'].join(oblivionIni.getSetting(u'General', u'SLocalMasterPath', u'Data\\'))
+            dirs['mods'] = dirs['app'].join(oblivionIni.getSetting(u'General', u'SLocalMasterPath', u'Data'))
+            dirs['mods'] = dirs['mods'].rstrip(u'\\')
             # these are relative to the mods path so they must be updated too
             dirs['patches'] = dirs['mods'].join(u'Bash Patches')
             dirs['tweaks'] = dirs['mods'].join(u'INI Tweaks')

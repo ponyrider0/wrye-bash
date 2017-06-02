@@ -25,6 +25,7 @@
 """This modules defines static data for use by bush, when
    TES IV: Oblivion is set at the active game."""
 
+from os.path import join as _j
 import struct
 from .constants import *
 from .default_tweaks import default_tweaks
@@ -171,7 +172,7 @@ masterFiles = [
     ]
 
 #The pickle file for this game. Holds encoded GMST IDs from the big list below.
-pklfile = ur'bash\db\Oblivion_ids.pkl'
+pklfile = _j(u'bash', u'db', u'Oblivion_ids.pkl')
 
 #--BAIN: Directories that are OK to install to
 dataDirs = {
@@ -219,24 +220,24 @@ wryeBashDataFiles = {
     u'Bashed Patch, Mage.esp',
     u'Bashed Patch, Test.esp',
     u'ArchiveInvalidationInvalidated!.bsa',
-    u'Docs\\Bash Readme Template.html',
-    u'Docs\\wtxt_sand_small.css',
-    u'Docs\\wtxt_teal.css',
-    u'Docs\\Bash Readme Template.txt'
+    _j(u'Docs', u'Bash Readme Template.html'),
+    _j(u'Docs', u'wtxt_sand_small.css'),
+    _j(u'Docs', u'wtxt_teal.css'),
+    _j(u'Docs', u'Bash Readme Template.txt')
 }
 wryeBashDataDirs = {
     u'Bash Patches',
     u'INI Tweaks'
 }
 ignoreDataFiles = {
-    u'OBSE\\Plugins\\Construction Set Extender.dll',
-    u'OBSE\\Plugins\\Construction Set Extender.ini'
+    _j(u'OBSE', u'Plugins', u'Construction Set Extender.dll'),
+    _j(u'OBSE', u'Plugins', u'Construction Set Extender.ini')
 }
 ignoreDataFilePrefixes = {
-    u'Meshes\\Characters\\_Male\\specialanims\\0FemaleVariableWalk_'
+    _j(u'Meshes', u'Characters', u'_Male', u'specialanims', u'0FemaleVariableWalk_')
 }
 ignoreDataDirs = {
-    u'OBSE\\Plugins\\ComponentDLLs\\CSE',
+    _j(u'OBSE', u'Plugins', u'ComponentDLLs', u'CSE'),
     u'LSData'
 }
 

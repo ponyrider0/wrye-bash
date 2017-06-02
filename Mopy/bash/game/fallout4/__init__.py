@@ -25,6 +25,7 @@
 """This modules defines static data for use by bush, when Fallout 4 is set as
    the active game."""
 
+from os.path import join as _j
 import struct
 from .constants import *
 from .default_tweaks import default_tweaks
@@ -188,7 +189,7 @@ masterFiles = [
     ]
 
 #The pickle file for this game. Holds encoded GMST IDs from the big list below.
-pklfile = ur'bash\db\Fallout4_ids.pkl'
+pklfile = _j(u'bash', u'db', u'Fallout4_ids.pkl')
 
 #--BAIN: Directories that are OK to install to
 dataDirs = {
@@ -234,12 +235,12 @@ wryeBashDataFiles = {
     u'Bashed Patch, Thief.esp',
     u'Bashed Patch, Mage.esp',
     u'Bashed Patch, Test.esp',
-    u'Docs\\Bash Readme Template.html',
-    u'Docs\\wtxt_sand_small.css',
-    u'Docs\\wtxt_teal.css',
-    u'Docs\\Bash Readme Template.txt',
-    u'Docs\\Bashed Patch, 0.html',
-    u'Docs\\Bashed Patch, 0.txt',
+    _j(u'Docs', u'Bash Readme Template.html'),
+    _j(u'Docs', u'wtxt_sand_small.css'),
+    _j(u'Docs', u'wtxt_teal.css'),
+    _j(u'Docs', u'Bash Readme Template.txt'),
+    _j(u'Docs', u'Bashed Patch), 0.html'),
+    _j(u'Docs', u'Bashed Patch), 0.txt'),
 }
 
 wryeBashDataDirs = {
