@@ -43,6 +43,11 @@ is_standalone = hasattr(sys, 'frozen')
 def _import_wx():
     """:rtype: wx | None"""
     try:
+        import wxversion
+        try:
+            wxversion.select('2.8')
+        except wxversion.VersionError:
+            pass # TODO: note somewhere that it's the wrong version?
         import wx
     except ImportError:
         wx = None
@@ -437,6 +442,9 @@ def main(opts):
             return
 
     app.Init() # Link.Frame is set here !
+    # TODO remove this, this is only for debugging //nycz
+    # import wx.lib.inspection as wxinspect
+    # wxinspect.InspectionTool().Show()
     app.MainLoop()
 
 # Show error in gui -----------------------------------------------------------
@@ -553,7 +561,9 @@ def _wxSelectGame(ret, msgtext, _wx):
 def _rightWxVersion(_wx):
     wxver = _wx.version()
     wxver_tuple = _wx.VERSION
-    if wxver != '2.8.12.1 (msw-unicode)' and wxver_tuple < (2,9):
+    if wxver == '2.8.12.1 (gtk2-unicode)':
+        return True # TODO: some note/check here about running linux?
+    elif wxver != '2.8.12.1 (msw-unicode)' and wxver_tuple < (2,9):
         return balt.askYes(
             None, 'Warning: you appear to be using a non-supported version '
             'of wxPython (%s).  This will cause problems!  It is highly '
