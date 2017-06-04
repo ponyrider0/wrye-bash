@@ -37,7 +37,7 @@ import traceback
 
 import bass
 # NO LOCAL IMPORTS HERE !
-basher = balt = barb = None
+basher = balt = barb = exceptions = None
 is_standalone = hasattr(sys, 'frozen')
 
 def _import_wx():
@@ -82,10 +82,10 @@ def _new_bash_version_prompt_backup():
         u'Do you want to create a backup of your Bash settings before they '
         u'are overwritten?'))
 
-def cmdBackup(bolt, opts):
+def cmdBackup(opts):
     # backup settings if app version has changed or on user request
-    global basher, balt, barb
-    if not basher: import basher, balt, barb
+    global basher, balt, barb, exceptions
+    if not basher: import basher, balt, barb, exceptions
     path = (opts.backup and opts.filename) or None
     should_quit = opts.backup and opts.quietquit
     if _new_bash_version_prompt_backup() or opts.backup:
@@ -94,7 +94,7 @@ def cmdBackup(bolt, opts):
                                      opts.backup_images)
         try:
             backup.Apply()
-        except bolt.StateError:
+        except exceptions.StateError:
             if barb.SameAppVersion():
                 backup.WarnFailed()
             elif balt.askYes(frame, u'\n'.join([
@@ -103,7 +103,7 @@ def cmdBackup(bolt, opts):
             _(u'Do you want to quit Wrye Bash now?')]),
                              title=_(u'Unable to create backup!')):
                 return False # Quit
-        except barb.BackupCancelled:
+        except exceptions.BackupCancelled:
             if not barb.SameAppVersion() and balt.askYes(frame, u'\n'.join([
             _(u'You did not create a backup of the Bash settings.'),
             _(u'If you continue, your current settings may be overwritten.'),
@@ -114,8 +114,8 @@ def cmdBackup(bolt, opts):
 
 def cmdRestore(opts):
     # restore settings on user request
-    global basher, balt, barb
-    if not basher: import basher, balt, barb
+    global basher, balt, barb, exceptions
+    if not basher: import basher, balt, barb, exceptions
     path = (opts.restore and opts.filename) or None
     should_quit = opts.restore and opts.quietquit
     if opts.restore:
@@ -123,7 +123,7 @@ def cmdRestore(opts):
             backup = barb.RestoreSettings(balt.Link.Frame, path, should_quit,
                                           opts.backup_images)
             backup.Apply()
-        except barb.BackupCancelled:
+        except exceptions.BackupCancelled:
             pass
     return should_quit
 
@@ -289,6 +289,7 @@ def main(opts):
     bass.language = opts.language
     import bolt # bass.language must be set
     import env # env imports bolt (this needs fixing)
+    import exceptions
     bolt.deprintOn = opts.debug
     wx = _import_wx()
     # useful for understanding context of bug reports
@@ -390,7 +391,8 @@ def main(opts):
         import basher
         import barb
         import balt
-    except (bolt.PermissionError, bolt.BoltError, ImportError) as e:
+    except (exceptions.PermissionError,
+            exceptions.BoltError, ImportError) as e:
         _showErrorInGui(e, _wx=wx, bolt=bolt)
         return
 
@@ -417,7 +419,7 @@ def main(opts):
 
     # process backup/restore options
     # quit if either is true, but only after calling both
-    should_quit = cmdBackup(bolt, opts)
+    should_quit = cmdBackup(opts)
     should_quit = cmdRestore(opts) or should_quit
     if should_quit: return
 

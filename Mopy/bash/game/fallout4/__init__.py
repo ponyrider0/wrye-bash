@@ -31,7 +31,8 @@ from .constants import *
 from .default_tweaks import default_tweaks
 from .records import MreHeader, MreLvli, MreLvln
 from ... import brec
-from ...brec import BaseRecordHeader, ModError
+from ...brec import BaseRecordHeader
+from ...exceptions import ModError
 
 #--Name of the game to use in UI.
 displayName = u'Fallout 4'
