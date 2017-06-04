@@ -965,8 +965,8 @@ class Installer(object):
         # install a mod for Oblivion.
         try:
             if count:
-                destDir = bass.dirs['mods'].head + os_sep + u'Data'
-                stageDataDir += os_sep + u'*'
+                destDir = bass.dirs['mods'].head.join(u'Data')
+                stageDataDir = stageDataDir.join(u'*')
                 env.shellMove(stageDataDir, destDir, progress.getParent())
         finally:
             #--Clean up staging dir
