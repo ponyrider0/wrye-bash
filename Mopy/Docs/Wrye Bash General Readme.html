@@ -349,10 +349,22 @@ from other packages previously overridden by the uninstalled package's
  files will be automatically restored.
 
 <h3 id="bain-order">BAIN Package Order</h3>
-<p>The install order of packages in BAIN is important as this decides which mod gets its files installed in the case of resource conflicts. Packages may be listed in install order by left-clicking on the <q>Order</q> column header. If two mods try to install the same file, then the mod lower down in the list will have its file overwrite the file of the mod higher up in the list.
-<p>The order of sub-packages within a package follow the same rules as packages. Checked sub-packages lower in the sub-package list will overwrite conflicting content from sub-packages above them.
-<p>Package conflicts are detailed in the <q>Conflicts</q> tab to the right of the package list when you select a package. This tab tells you which packages have which files that conflict with files in your currently-selected package. It gives this information for packages both above and below the selected package in the package list.
-<p>BAIN allows you to easily adjust the conflict status of packages by moving their order around. This can be done by dragging and dropping packages within the list, or by right-clicking packages and selecting the <a href="#bainMoveTo">Move To...</a> option. You can also select multiple packages and move them, in which case they will be moved as a group, retaining their order relative to one another in their new location. A third option is to select the package(s) and use Ctrl-Up or Ctrl-Down to move them up or down respectively.
+<p>The install order of packages in BAIN is important as this decides which mod gets its files installed in the case of resource conflicts.
+    Packages may be listed in install order by left-clicking on the <q>Order</q> column header. If two mods try to install the same file,
+    then the mod lower down in the list will have its file overwrite the file of the mod higher up IN THE LIST. Note that "higher/lower"
+    refers to how packages are listed VISUALLY, not higher or lower in number. Packages sorted by install order are listed numerically,
+    starting with "0" at the top and going higher in number as you go down the list. Visually, a mod lower in the list will have a higher
+    order number. For example a package with an order number of 5 will display lower in the list than a package with an order number of 4.
+    If there are any conflicting files with package 4, they will be overwritten by package 5.
+<p>The order of sub-packages within a package follow the same rules as packages. Checked sub-packages lower in the sub-package list will
+    overwrite conflicting content from sub-packages above them.
+<p>Package conflicts are detailed in the <q>Conflicts</q> tab to the right of the package list when you select a package. This tab tells you
+    which packages have which files that conflict with files in your currently-selected package. It gives this information for packages both
+    above and below the selected package in the package list.
+<p>BAIN allows you to easily adjust the conflict status of packages by moving their order around. This can be done by dragging and dropping
+    packages within the list, or by right-clicking packages and selecting the <a href="#bainMoveTo">Move To...</a> option. You can also
+    select multiple packages and move them, in which case they will be moved as a group, retaining their order relative to one another in
+    their new location. A third option is to select the package(s) and use Ctrl-Up or Ctrl-Down to move them up or down respectively.
 
 <h3 id="bain-symbols">What Symbols &amp; Colours Mean</h3>
 <p>BAIN uses the colours of packages in the package list and the state of their checkboxes to convey information about their status to the user. A checkbox state may be combined with any checkbox or text colour, and the possible states and colours are described in the tables below.
@@ -443,6 +455,9 @@ from other packages previously overridden by the uninstalled package's
     ticked checkbox, is important as it decides what plugin 'wins' any conflict between plugins, with later loading plugins overriding those
     that change the same thing. <b>Load order is not the same thing as BAIN install order!</b> Install order determines which mods' files overwrite
     other mods' files when they conflict. Load order determines which plugins' effects override other plugins' effects in-game when they conflict.
+    Remember that "higher/lower" refers to how mods are listed VISUALLY, not higher or lower in number. A mod lower in the list
+    will have a higher number, and will "win" if there's a conflict with a mod higher up (which will have a lower number). So if you are
+    directed to load a mod "last" or "lower down" in the list, this means visually lower (with a higher number).
 <p>Although in general "Load Order" stands for the load order of the <i>active</i> plugins, all installed plugins have a load order assigned
     to them. In Oblivion this is based on the modification time of the plugin, in Skyrim based to an agreed upon text-file based standard,
     while Fallout 4 finally dumps all installed plugins in its plugins.txt, marking active ones with an asterisk. Bash needs plugins load
