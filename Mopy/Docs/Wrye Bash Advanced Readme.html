@@ -365,9 +365,9 @@ tab. The directories skipped are:
 
 <h3 id="bain-monitor">Monitor External Installation</h3>
 
-<p>One of the killer features of Wrye Bash is the ability to monitor your game's Data directory to detect any changes made by an external
-    application. It can then take the new or changed files placed there by the external installer and create a new BAIN package that can be
-    handled, installed, and uninstalled just like any other standard BAIN mod. This is incredibly powerful for mod authors or anyone that
+<p>Wrye Bash can monitor your game's Data directory to detect any changes made by an external application or manual installation. It will
+    take the new or changed files and create a new BAIN package that can be handled, installed, and uninstalled just like any other standard
+    BAIN. This is very useful for mod authors or anyone that
     wants to keep strict control of what gets placed into their data directory.
 
 <h4>Example usage scenarios</h4>
@@ -375,10 +375,10 @@ tab. The directories skipped are:
 <ul>
     <li><b>Creation Kit/GECK monitoring</b>
 - When creating or managing content in the Creation Kit or GECK, Wrye Bash can capture any output from the CK/GECK in a BAIN package. This
-    is extremely useful for capturing FaceGen data as NPCs are managed, and it will also capture any loose files, ESP, or BSA created in the
+        is useful for example when capturing FaceGen data as NPCs are managed, and it will also capture any loose files, ESP, or BSA created in the
     editor.
     <li><b>BodySlide</b>
-- BodySlide is a utility used to create custom bodies and armor to fit these bodies, as well as fit custom armors by third-parties to a
+- BodySlide is a utility used to create custom bodies and armor to fit these bodies, as well as from armors by third-parties to a
     custom body. Wrye Bash can capture all output from BodySlide and package it into a BAIN for easy management. These files can then be
     packaged and distributed, backed up, or used to build another mod.
     <li><b>Nexus Mod Manager / Other Mod Managers</b>
