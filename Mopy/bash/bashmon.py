@@ -42,7 +42,7 @@ import bosh
 import bolt
 from bosh.faces import PCFaces
 from bolt import GPath, intArg
-import exceptions
+import exception
 
 #--Debugging/Info
 bolt.deprintOn = True
@@ -249,9 +249,9 @@ def moveSave(oldSave,newSave):
     oldPath = data.savesDir.join(GPath(oldSave).tail)
     newPath = data.savesDir.join(GPath(newSave).tail)
     if newPath.exists() and not newPath.isfile():
-        raise exceptions.BoltError(newPath+_(u' exists and is not a save file.'))
+        raise exception.BoltError(newPath + _(u' exists and is not a save file.'))
     if oldPath.exists():
-        if not oldPath.isfile(): raise exceptions.BoltError(oldPath+_(u' is not a save file.'))
+        if not oldPath.isfile(): raise exception.BoltError(oldPath + _(u' is not a save file.'))
         oldPath.moveTo(newPath)
         bosh.CoSaves(oldPath).move(newPath)
 

@@ -37,7 +37,7 @@ from ..balt import EnabledLink, AppendableLink, Link, CheckLink, ChoiceLink, \
     ItemLink, SeparatorLink, OneItemLink, Image, UIList_Rename
 from ..bolt import GPath, SubProgress, formatInteger
 from ..bosh import faces, _saves
-from ..exceptions import ArgumentError, BoltError, CancelError, ModError
+from ..exception import ArgumentError, BoltError, CancelError, ModError
 
 __all__ = ['Saves_Profiles', 'Save_Rename', 'Save_Renumber', 'Save_Move',
            'Save_LoadMasters', 'Save_DiffMasters', 'Save_Stats',

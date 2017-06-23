@@ -26,7 +26,7 @@
 from .. import bass, bush
 from ..bolt import GPath
 from ..cint import ObCollection
-from ..exceptions import ModError
+from ..exception import ModError
 from ..load_order import cached_is_active
 from ..parsers import ModFile, LoadFactory
 

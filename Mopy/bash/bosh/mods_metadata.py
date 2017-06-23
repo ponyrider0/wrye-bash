@@ -31,7 +31,7 @@ from .. import balt, bolt, bush, bass, load_order
 from ..bolt import GPath, deprint, sio
 from ..brec import ModReader, MreRecord
 from ..cint import ObBaseRecord, ObCollection
-from ..exceptions import BoltError, CancelError, ModError
+from ..exception import BoltError, CancelError, ModError
 from ..patcher import getPatchesPath, getPatchesList
 
 try:

@@ -41,7 +41,7 @@ from itertools import groupby, imap
 from operator import itemgetter
 from . import AFile
 from ..bolt import deprint
-from ..exceptions import BSAError, BSADecodingError, BSAFlagError, \
+from ..exception import BSAError, BSADecodingError, BSAFlagError, \
     BSANotImplemented
 
 _bsa_encoding = 'cp1252' # rumor has it that's the files/folders names encoding

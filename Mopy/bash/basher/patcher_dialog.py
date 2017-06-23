@@ -36,7 +36,7 @@ from ..balt import StaticText, vSizer, hSizer, hspacer, Link, OkButton, \
     SelectAllButton, CancelButton, SaveAsButton, OpenButton, \
     RevertToSavedButton, RevertButton, hspace, vspace, Resources
 from ..bolt import SubProgress, GPath, Path
-from ..exceptions import BoltError, CancelError, FileEditError, \
+from ..exception import BoltError, CancelError, FileEditError, \
     PluginsFullError, SkipError
 from ..patcher import configIsCBash, exportConfig
 from ..patcher.patch_files import PatchFile, CBash_PatchFile

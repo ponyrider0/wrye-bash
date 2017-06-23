@@ -35,7 +35,7 @@ import sys
 from collections import OrderedDict
 from .. import bolt
 from ..bolt import decode, cstrip
-from ..exceptions import SaveHeaderError
+from ..exception import SaveHeaderError
 
 # Structure wrappers ----------------------------------------------------------
 def unpack_str8(ins): return ins.read(struct.unpack('B', ins.read(1))[0])

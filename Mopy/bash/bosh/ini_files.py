@@ -30,7 +30,7 @@ from . import AFile
 from .. import env, bush, balt
 from ..bass import dirs
 from ..bolt import LString, deprint, GPath
-from ..exceptions import AbstractError, CancelError, SkipError
+from ..exception import AbstractError, CancelError, SkipError
 
 class IniFile(AFile):
     """Any old ini file."""

@@ -25,7 +25,7 @@ import re
 import struct
 from .. import bass, bush, bolt
 from ..bolt import Flags, encode, sio, Path
-from ..exceptions import SaveFileError, StateError
+from ..exception import SaveFileError, StateError
 from . import SaveInfo
 from ._saves import SreNPC, SaveFile
 from ..parsers import LoadFactory, ModFile, MasterMap

@@ -29,7 +29,7 @@ from .. import bass, bosh, bolt, balt, bush, parsers, load_order
 from ..balt import ItemLink, Link, Links, bitmapButton, \
     SeparatorLink, tooltip, BoolLink, staticBitmap
 from ..bolt import GPath
-from ..exceptions import AbstractError
+from ..exception import AbstractError
 from ..env import getJava
 
 __all__ = ['Obse_Button', 'LAA_Button', 'AutoQuit_Button', 'Game_Button',

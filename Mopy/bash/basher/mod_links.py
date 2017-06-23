@@ -42,7 +42,7 @@ from ..patcher import configIsCBash, exportConfig, patch_files
 from .frames import DocBrowser
 from .constants import settingDefaults
 from ..cint import CBashApi, FormID
-from ..exceptions import AbstractError, BoltError, CancelError
+from ..exception import AbstractError, BoltError, CancelError
 from .patcher_dialog import PatchDialog, CBash_gui_patchers, PBash_gui_patchers
 
 __all__ = ['Mod_FullLoad', 'Mod_CreateDummyMasters', 'Mod_OrderByName',

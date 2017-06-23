@@ -72,7 +72,7 @@ from ..bolt import GPath, SubProgress, deprint, formatInteger, formatDate, \
     round_size
 from ..bosh import omods
 from ..cint import CBashApi
-from ..exceptions import AbstractError, BoltError, CancelError, FileError, \
+from ..exception import AbstractError, BoltError, CancelError, FileError, \
     SkipError
 
 startupinfo = bolt.startupinfo

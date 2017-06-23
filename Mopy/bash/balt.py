@@ -32,7 +32,7 @@ import bass # for dirs - try to avoid
 #..Handled by bolt, so import that.
 import bolt
 from bolt import GPath, deprint
-from exceptions import AbstractError, AccessDeniedError, ArgumentError, \
+from exception import AbstractError, AccessDeniedError, ArgumentError, \
     BoltError, CancelError, SkipError, StateError
 #--Python
 import cPickle

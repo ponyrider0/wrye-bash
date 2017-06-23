@@ -44,7 +44,7 @@ from brec import MreRecord, MelObject, _coerce, genFid, ModReader, ModWriter
 from cint import ObCollection, FormID, aggregateTypes, validTypes, \
     MGEFCode, ActorValue, ValidateList, pickupables, ExtractExportList, \
     ValidateDict, IUNICODE, getattr_deep, setattr_deep
-from exceptions import ArgumentError, MasterMapError, ModError, StateError
+from exception import ArgumentError, MasterMapError, ModError, StateError
 from record_groups import MobDials, MobICells, MobWorlds, MobObjects, MobBase
 
 class ActorFactions:

@@ -33,7 +33,7 @@ from operator import attrgetter
 
 import bass
 import bolt
-import exceptions
+import exception
 from bolt import decode, encode, sio, GPath
 from bass import null1
 
@@ -71,7 +71,7 @@ def netString(x):
     if lenx < 128:
         return struct.pack('b',lenx)+x
     elif lenx > 0x7FFF: #--Actually, probably fails earlier.
-        raise exceptions.UncodedError
+        raise exception.UncodedError
     else:
         lenx = 0x80 | lenx & 0x7F | (lenx & 0xFF80) << 1
         return struct.pack('H',lenx)+x
@@ -129,11 +129,11 @@ class BaseRecordHeader(object):
     @staticmethod
     def unpack(ins):
         """Return a RecordHeader object by reading the input stream."""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     def pack(self):
         """Return the record header packed into a string to be written to file"""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
 #------------------------------------------------------------------------------
 class ModReader:
@@ -179,7 +179,7 @@ class ModReader:
         else:
             newPos = offset
         if newPos < 0 or newPos > self.size:
-            raise exceptions.ModReadError(self.inName, recType, newPos, self.size)
+            raise exception.ModReadError(self.inName, recType, newPos, self.size)
         self.ins.seek(offset,whence)
 
     def tell(self):
@@ -196,7 +196,7 @@ class ModReader:
         if endPos == -1:
             return filePos == self.size
         elif filePos > endPos:
-            raise exceptions.ModError(self.inName, u'Exceeded limit of: ' + recType)
+            raise exception.ModError(self.inName, u'Exceeded limit of: ' + recType)
         else:
             return filePos == endPos
 
@@ -205,7 +205,7 @@ class ModReader:
         """Read from file."""
         endPos = self.ins.tell() + size
         if endPos > self.size:
-            raise exceptions.ModSizeError(self.inName,recType,endPos,self.size)
+            raise exception.ModSizeError(self.inName, recType, endPos, self.size)
         return self.ins.read(size)
 
     def readLString(self,size,recType='----'):
@@ -215,7 +215,7 @@ class ModReader:
         if self.hasStrings:
             if size != 4:
                 endPos = self.ins.tell() + size
-                raise exceptions.ModReadError(self.inName,recType,endPos,self.size)
+                raise exception.ModReadError(self.inName, recType, endPos, self.size)
             id_, = self.unpack('I',4,recType)
             if id_ == 0: return u''
             else: return self.strings.get(id_,u'LOOKUP FAILED!') #--Same as Skyrim
@@ -246,7 +246,7 @@ class ModReader:
         """Read file and unpack according to struct format."""
         endPos = self.ins.tell() + size
         if endPos > self.size:
-            raise exceptions.ModReadError(self.inName,recType,endPos,self.size)
+            raise exception.ModReadError(self.inName, recType, endPos, self.size)
         return struct.unpack(format,self.ins.read(size))
 
     def unpackRef(self,recType='----'):
@@ -266,12 +266,12 @@ class ModReader:
             rec_type = selfUnpack('4sH', 6, recType + '.XXXX.TYPE')[0] #--Throw away size (always == 0)
         #--Match expected name?
         if expType and expType != rec_type:
-            raise exceptions.ModError(self.inName, u'%s: Expected %s subrecord, but '
+            raise exception.ModError(self.inName, u'%s: Expected %s subrecord, but '
                            u'found %s instead.' % (recType, expType, rec_type))
         #--Match expected size?
         if expSize and expSize != size:
-            raise exceptions.ModSizeError(self.inName, recType + '.' + rec_type, size,
-                                          expSize, True)
+            raise exception.ModSizeError(self.inName, recType + '.' + rec_type, size,
+                                         expSize, True)
         return rec_type,size
 
     #--Find data ------------------------------------------
@@ -453,7 +453,7 @@ class MelBase:
     def mapFids(self,record,function,save=False):
         """Applies function to fids. If save is True, then fid is set
         to result of function."""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
 #------------------------------------------------------------------------------
 class MelFid(MelBase):
@@ -1193,7 +1193,7 @@ class MelSet:
             readId = recType + '.' + Type
             try:
                 if Type not in loaders:
-                    raise exceptions.ModError(ins.inName, u'Unexpected subrecord: ' + repr(readId))
+                    raise exception.ModError(ins.inName, u'Unexpected subrecord: ' + repr(readId))
                 #--Hack to handle the fact that there can be two types of FULL in spell/ench/ingr records.
                 elif doFullTest and Type == 'FULL':
                     self.full0.loadData(record,ins,Type,size,readId)
@@ -1238,7 +1238,7 @@ class MelSet:
 
     def updateMasters(self,record,masters):
         """Updates set of master names according to masters actually used."""
-        if not record.longFids: raise exceptions.StateError("Fids not in long format")
+        if not record.longFids: raise exception.StateError("Fids not in long format")
         def updater(fid):
             masters.add(fid)
         updater(record.fid)
@@ -1292,11 +1292,11 @@ class MreSubrecord:
 
     def dumpData(self,out):
         """Dumps state into out. Called by getSize()."""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     def dump(self,out):
-        if self.changed: raise exceptions.StateError(u'Data changed: '+self.subType)
-        if not self.data: raise exceptions.StateError(u'Data undefined: '+self.subType)
+        if self.changed: raise exception.StateError(u'Data changed: ' + self.subType)
+        if not self.data: raise exception.StateError(u'Data undefined: ' + self.subType)
         out.packSub(self.subType,self.data)
 
 #------------------------------------------------------------------------------
@@ -1464,9 +1464,9 @@ class MreRecord(object):
         size, = struct.unpack('I',self.data[:4])
         decomp = zlib.decompress(self.data[4:])
         if len(decomp) != size:
-            raise exceptions.ModError(self.inName,
+            raise exception.ModError(self.inName,
                 u'Mis-sized compressed data. Expected %d, got %d.'
-                                      % (size,len(decomp)))
+                                     % (size,len(decomp)))
         return decomp
 
     def load(self,ins=None,unpack=False):
@@ -1520,11 +1520,11 @@ class MreRecord(object):
     def convertFids(self,mapper,toLong):
         """Converts fids between formats according to mapper.
         toLong should be True if converting to long format or False if converting to short format."""
-        raise exceptions.AbstractError(self.recType)
+        raise exception.AbstractError(self.recType)
 
     def updateMasters(self,masters):
         """Updates set of master names according to masters actually used."""
-        raise exceptions.AbstractError(self.recType)
+        raise exception.AbstractError(self.recType)
 
     def setChanged(self,value=True):
         """Sets changed attribute to value. [Default = True.]"""
@@ -1539,7 +1539,7 @@ class MreRecord(object):
     def getSize(self):
         """Return size of self.data, after, if necessary, packing it."""
         if not self.changed: return self.size
-        if self.longFids: raise exceptions.StateError(
+        if self.longFids: raise exception.StateError(
             u'Packing Error: %s %s: Fids in long format.'
             % (self.recType,self.fid))
         #--Pack data and return size.
@@ -1558,16 +1558,16 @@ class MreRecord(object):
         """Dumps state into data. Called by getSize(). This default version
         just calls subrecords to dump to out."""
         if self.subrecords is None:
-            raise exceptions.StateError(u'Subrecords not unpacked. [%s: %s %08X]' %
-                (self.inName, self.recType, self.fid))
+            raise exception.StateError(u'Subrecords not unpacked. [%s: %s %08X]' %
+                                       (self.inName, self.recType, self.fid))
         for subrecord in self.subrecords:
             subrecord.dump(out)
 
     def dump(self,out):
         """Dumps all data to output stream."""
-        if self.changed: raise exceptions.StateError(u'Data changed: '+self.recType)
+        if self.changed: raise exception.StateError(u'Data changed: ' + self.recType)
         if not self.data and not self.flags1.deleted and self.size > 0:
-            raise exceptions.StateError(u'Data undefined: '+self.recType+u' '+hex(self.fid))
+            raise exception.StateError(u'Data undefined: ' + self.recType + u' ' + hex(self.fid))
         #--Update the header so it 'packs' correctly
         self.header.size = self.size
         if self.recType != 'GRUP':
@@ -1773,14 +1773,14 @@ class MreLeveledListBase(MelRecord):
 
     def mergeFilter(self,modSet):
         """Filter out items that don't come from specified modSet."""
-        if not self.longFids: raise exceptions.StateError(u'Fids not in long format')
+        if not self.longFids: raise exception.StateError(u'Fids not in long format')
         self.entries = [entry for entry in self.entries if entry.listId[0] in modSet]
 
     def mergeWith(self,other,otherMod):
         """Merges newLevl settings and entries with self.
         Requires that: self.items, other.delevs and other.relevs be defined."""
         if not self.longFids or not other.longFids:
-            raise exceptions.StateError(u'Fids not in long format')
+            raise exception.StateError(u'Fids not in long format')
         #--Relevel or not?
         if other.relevs:
             for attr in self.__class__.copyAttrs:

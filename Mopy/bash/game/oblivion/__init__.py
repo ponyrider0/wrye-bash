@@ -39,7 +39,7 @@ from .records import MreActi, MreAlch, MreAmmo, MreAnio, MreAppa, MreArmo, \
     MreIdle, MreLtex, MreRegn, MreSbsp, MreSkil, MreAchr, MreAcre, \
     MreCell, MreGmst, MreRefr, MreRoad, MreHeader, MreWrld, MreDial, MreInfo
 from ...brec import MreGlob, BaseRecordHeader
-from ...exceptions import ModError
+from ...exception import ModError
 
 #--Name of the game to use in UI.
 displayName = u'Oblivion'

@@ -37,7 +37,7 @@ from . import images_list
 from bolt import GPath, deprint
 from balt import askSave, askOpen, askWarning, showError, showWarning, \
     showInfo, Link, BusyCursor
-from exceptions import AbstractError, BackupCancelled
+from exception import AbstractError, BackupCancelled
 
 #------------------------------------------------------------------------------
 class BaseBackupSettings:

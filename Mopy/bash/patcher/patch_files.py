@@ -34,7 +34,7 @@ from ..parsers import LoadFactory, ModFile, MasterSet
 from ..brec import MreRecord
 from ..bolt import GPath, SubProgress, deprint, Progress
 from ..cint import ObModFile, FormID, dump_record, ObCollection, MGEFCode
-from ..exceptions import AbstractError, BoltError, CancelError, ModError, \
+from ..exception import AbstractError, BoltError, CancelError, ModError, \
     StateError
 from ..record_groups import MobObjects
 

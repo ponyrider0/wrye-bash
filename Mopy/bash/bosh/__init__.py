@@ -54,7 +54,7 @@ from ..bass import dirs, inisettings, tooldirs, reModExt
 from ..bolt import GPath, DataDict, cstrip, deprint, sio, Path, decode
 from ..brec import MreRecord, ModReader
 from ..cint import CBashApi
-from ..exceptions import AbstractError, ArgumentError, BoltError, BSAError, \
+from ..exception import AbstractError, ArgumentError, BoltError, BSAError, \
     CancelError, FileError, ModError, NonExistentDriveError, PermissionError, \
     PluginsFullError, SaveFileError, SaveHeaderError, SkipError, StateError
 from ..parsers import ModFile

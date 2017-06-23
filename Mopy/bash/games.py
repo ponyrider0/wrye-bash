@@ -34,7 +34,7 @@ import time
 from collections import defaultdict
 # Local
 import bolt
-import exceptions
+import exception
 import env
 
 def _write_plugins_txt_(path, lord, active, _star):
@@ -299,7 +299,7 @@ class Game(object):
         raise NotImplementedError
 
     @staticmethod
-    def _must_update_active(deleted, reordered): raise exceptions.AbstractError
+    def _must_update_active(deleted, reordered): raise exception.AbstractError
 
     def active_changed(self): return self._plugins_txt_modified()
 
@@ -322,25 +322,25 @@ class Game(object):
     def _fetch_load_order(self, cached_load_order, cached_active):
         """:type cached_load_order: tuple[bolt.Path]
         :type cached_active: tuple[bolt.Path]"""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     def _fetch_active_plugins(self): # no override for AsteriskGame
         """:rtype: list[bolt.Path]"""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     def _persist_load_order(self, lord, active):
         """Persist the fixed lord to disk - will break conflicts for
         timestamp games."""
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     def _persist_active_plugins(self, active, lord):
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     def _persist_if_changed(self, active, lord, previous_active,
                             previous_lord):
         # Override for fallout4 to write the file once and oblivion to save
         # active only if needed. Both active and lord must not be None.
-        raise exceptions.AbstractError
+        raise exception.AbstractError
 
     # MODFILES PARSING --------------------------------------------------------
     def _parse_modfile(self, path):
@@ -392,7 +392,7 @@ class Game(object):
             master_dex = lord.index(master_name)
         except ValueError:
             if not master_name in self.mod_infos:
-                raise exceptions.BoltError(
+                raise exception.BoltError(
                     u'%s is missing or corrupted' % master_name)
             fix_lo.lo_added = {master_name}
         if master_dex > 0:

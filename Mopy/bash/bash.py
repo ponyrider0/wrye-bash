@@ -85,7 +85,7 @@ def _new_bash_version_prompt_backup():
 def cmdBackup(opts):
     # backup settings if app version has changed or on user request
     global basher, balt, barb, exceptions
-    if not basher: import basher, balt, barb, exceptions
+    if not basher: import basher, balt, barb, exception
     path = (opts.backup and opts.filename) or None
     should_quit = opts.backup and opts.quietquit
     if _new_bash_version_prompt_backup() or opts.backup:
@@ -94,7 +94,7 @@ def cmdBackup(opts):
                                      opts.backup_images)
         try:
             backup.Apply()
-        except exceptions.StateError:
+        except exception.StateError:
             if barb.SameAppVersion():
                 backup.WarnFailed()
             elif balt.askYes(frame, u'\n'.join([
@@ -103,7 +103,7 @@ def cmdBackup(opts):
             _(u'Do you want to quit Wrye Bash now?')]),
                              title=_(u'Unable to create backup!')):
                 return False # Quit
-        except exceptions.BackupCancelled:
+        except exception.BackupCancelled:
             if not barb.SameAppVersion() and balt.askYes(frame, u'\n'.join([
             _(u'You did not create a backup of the Bash settings.'),
             _(u'If you continue, your current settings may be overwritten.'),
@@ -115,7 +115,7 @@ def cmdBackup(opts):
 def cmdRestore(opts):
     # restore settings on user request
     global basher, balt, barb, exceptions
-    if not basher: import basher, balt, barb, exceptions
+    if not basher: import basher, balt, barb, exception
     path = (opts.restore and opts.filename) or None
     should_quit = opts.restore and opts.quietquit
     if opts.restore:
@@ -123,7 +123,7 @@ def cmdRestore(opts):
             backup = barb.RestoreSettings(balt.Link.Frame, path, should_quit,
                                           opts.backup_images)
             backup.Apply()
-        except exceptions.BackupCancelled:
+        except exception.BackupCancelled:
             pass
     return should_quit
 
@@ -289,7 +289,7 @@ def main(opts):
     bass.language = opts.language
     import bolt # bass.language must be set
     import env # env imports bolt (this needs fixing)
-    import exceptions
+    import exception
     bolt.deprintOn = opts.debug
     wx = _import_wx()
     # useful for understanding context of bug reports
@@ -391,8 +391,8 @@ def main(opts):
         import basher
         import barb
         import balt
-    except (exceptions.PermissionError,
-            exceptions.BoltError, ImportError) as e:
+    except (exception.PermissionError,
+            exception.BoltError, ImportError) as e:
         _showErrorInGui(e, _wx=wx, bolt=bolt)
         return
 

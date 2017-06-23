@@ -31,7 +31,7 @@ import re
 from ... import bass # for dirs
 from ...bolt import GPath
 from ...cint import FormID
-from ...exceptions import AbstractError
+from ...exception import AbstractError
 from ...patcher.base import AMultiTweakItem
 from .base import MultiTweakItem, CBash_MultiTweakItem, MultiTweaker, \
     CBash_MultiTweaker

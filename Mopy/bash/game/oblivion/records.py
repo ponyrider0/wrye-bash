@@ -34,7 +34,7 @@ from ...brec import MelRecord, MelStructs, \
 from ...bass import null1, null2, null3, null4
 from ...bush import genericAVEffects, mgef_school, mgef_basevalue, actorValues
 from constants import allConditions, fid1Conditions, fid2Conditions
-from ...exceptions import BoltError, ModError, ModSizeError, StateError
+from ...exception import BoltError, ModError, ModSizeError, StateError
 
 #------------------------------------------------------------------------------
 # Record Elements    ----------------------------------------------------------

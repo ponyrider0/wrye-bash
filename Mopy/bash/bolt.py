@@ -49,7 +49,7 @@ import types
 from binascii import crc32
 import bass
 import chardet
-import exceptions
+import exception
 #-- To make commands executed with Popen hidden
 startupinfo = None
 if os.name == u'nt':
@@ -864,7 +864,7 @@ class Path(object):
             destName.mtime = self.mtime
     def moveTo(self,destName):
         if not self.exists():
-            raise exceptions.StateError(self._s + u' cannot be moved because it does not exist.')
+            raise exception.StateError(self._s + u' cannot be moved because it does not exist.')
         destPath = GPath(destName)
         if destPath._cs == self._cs: return
         if destPath.shead and not os.path.exists(destPath.shead):
@@ -1089,7 +1089,7 @@ class Flags(object):
             index = names[name]
             return (object.__getattribute__(self,'_field') >> index) & 1 == 1
         except KeyError:
-            raise exceptions.AttributeError(name)
+            raise exception.AttributeError(name)
 
     def __setattr__(self,name,value):
         """Set value by flag name. E.g., flags.isQuestItem = False"""
@@ -1187,7 +1187,7 @@ class OrderedSet(list, MutableSet):
        to the end of the set.
     """
     def update(self, *args, **kwdargs):
-        if kwdargs: raise exceptions.TypeError("update() takes no keyword arguments")
+        if kwdargs: raise exception.TypeError("update() takes no keyword arguments")
         for s in args:
             for e in s:
                 self.add(e)
@@ -1500,7 +1500,7 @@ class Settings(DataDict):
     def setChanged(self,key):
         """Marks given key as having been changed. Use if value is a dictionary, list or other object."""
         if key not in self.data:
-            raise exceptions.ArgumentError(u'No settings data for '+key)
+            raise exception.ArgumentError(u'No settings data for ' + key)
         self.changed.add(key)
 
     def getChanged(self,key,default=None):
@@ -1557,7 +1557,7 @@ class StructFile(file):
             strLen, = self.unpack('H',2)
             strLen = strLen & 0x7f | (strLen >> 1) & 0xff80
             if strLen > 0x7FFF:
-                raise exceptions.UncodedError(u'String too long to convert.')
+                raise exception.UncodedError(u'String too long to convert.')
         return self.read(strLen)
 
     def writeNetString(self,str):
@@ -1566,7 +1566,7 @@ class StructFile(file):
         if strLen < 128:
             self.pack('b',strLen)
         elif strLen > 0x7FFF: #--Actually probably fails earlier.
-            raise exceptions.UncodedError(u'String too long to convert.')
+            raise exception.UncodedError(u'String too long to convert.')
         else:
             strLen =  0x80 | strLen & 0x7f | (strLen & 0xff80) << 1
             self.pack('H',strLen)
@@ -1926,7 +1926,7 @@ class LogFile(Log):
 class Progress:
     """Progress Callable: Shows progress when called."""
     def __init__(self,full=1.0):
-        if (1.0*full) == 0: raise exceptions.ArgumentError(u'Full must be non-zero!')
+        if (1.0*full) == 0: raise exception.ArgumentError(u'Full must be non-zero!')
         self.message = u''
         self.full = 1.0 * full
         self.state = 0
@@ -1937,7 +1937,7 @@ class Progress:
 
     def setFull(self,full):
         """Set's full and for convenience, returns self."""
-        if (1.0*full) == 0: raise exceptions.ArgumentError(u'Full must be non-zero!')
+        if (1.0*full) == 0: raise exception.ArgumentError(u'Full must be non-zero!')
         self.full = 1.0 * full
         return self
 
@@ -1947,7 +1947,7 @@ class Progress:
 
     def __call__(self,state,message=''):
         """Update progress with current state. Progress is state/full."""
-        if (1.0*self.full) == 0: raise exceptions.ArgumentError(u'Full must be non-zero!')
+        if (1.0*self.full) == 0: raise exception.ArgumentError(u'Full must be non-zero!')
         if message: self.message = message
         if self.debug: deprint(u'%0.3f %s' % (1.0*state/self.full, self.message))
         self._do_progress(1.0 * state / self.full, self.message)
@@ -1973,7 +1973,7 @@ class SubProgress(Progress):
         Progress.__init__(self,full)
         if baseTo == '+1': baseTo = baseFrom + 1
         if baseFrom < 0 or baseFrom >= baseTo:
-            raise exceptions.ArgumentError(u'BaseFrom must be >= 0 and BaseTo must be > BaseFrom')
+            raise exception.ArgumentError(u'BaseFrom must be >= 0 and BaseTo must be > BaseFrom')
         self.parent = parent
         self.baseFrom = baseFrom
         self.scale = 1.0*(baseTo-baseFrom)
@@ -2424,16 +2424,16 @@ class WryeText:
             css = WryeText.defaultCss
         else:
             if cssName.ext != u'.css':
-                raise exceptions.BoltError(u'Invalid Css file: '+cssName.s)
+                raise exception.BoltError(u'Invalid Css file: ' + cssName.s)
             for css_dir in cssDirs:
                 cssPath = GPath(css_dir).join(cssName)
                 if cssPath.exists(): break
             else:
-                raise exceptions.BoltError(u'Css file not found: '+cssName.s)
+                raise exception.BoltError(u'Css file not found: ' + cssName.s)
             with cssPath.open('r',encoding='utf-8-sig') as cssIns:
                 css = u''.join(cssIns.readlines())
             if u'<' in css:
-                raise exceptions.BoltError(u'Non css tag in '+cssPath.s)
+                raise exception.BoltError(u'Non css tag in ' + cssPath.s)
         #--Write Output ------------------------------------------------------
         outWrite(WryeText.htmlHead % (title,css))
         didContents = False

@@ -31,7 +31,7 @@ import collections
 import struct
 from env import get_game_path
 from bolt import GPath, Path, deprint
-from exceptions import BoltError
+from exception import BoltError
 import game as game_init
 
 # Game detection --------------------------------------------------------------

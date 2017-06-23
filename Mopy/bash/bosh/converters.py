@@ -31,7 +31,7 @@ from ..archives import defaultExt, readExts, compressionSettings, \
     compressCommand, extractCommand
 from .. import bolt, archives, bass
 from ..bolt import DataDict, PickleDict, GPath, Path, sio, SubProgress
-from ..exceptions import ArgumentError, StateError
+from ..exception import ArgumentError, StateError
 
 converters_dir = None
 installers_dir = None

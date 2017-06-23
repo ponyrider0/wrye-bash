@@ -42,7 +42,7 @@ from ..archives import readExts, defaultExt, list_archive, compress7z, \
     countFilesInArchive, extractCommand, extract7z, compressionSettings
 from ..bolt import Path, deprint, formatInteger, round_size, GPath, \
     sio, SubProgress
-from ..exceptions import AbstractError, ArgumentError, BSAError, \
+from ..exception import AbstractError, ArgumentError, BSAError, \
     CancelError, InstallerArchiveError, SkipError, StateError
 
 os_sep = unicode(os.path.sep)

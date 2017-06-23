@@ -27,7 +27,7 @@ import subprocess
 
 import bass
 from bolt import startupinfo, GPath, deprint
-from exceptions import StateError
+from exception import StateError
 
 exe7z = u'7z.exe' if os.name == u'nt' else u'7z'
 defaultExt = u'.7z'

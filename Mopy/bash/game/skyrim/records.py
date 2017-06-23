@@ -38,7 +38,7 @@ from ...bass import null1, null2, null3, null4
 from ... import bush
 from constants import allConditions, fid1Conditions, fid2Conditions, \
     fid5Conditions
-from ...exceptions import BoltError, ModError, ModSizeError, StateError
+from ...exception import BoltError, ModError, ModSizeError, StateError
 
 from_iterable = itertools.chain.from_iterable
 

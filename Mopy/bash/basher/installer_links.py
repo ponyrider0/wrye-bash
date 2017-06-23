@@ -43,7 +43,7 @@ from ..balt import EnabledLink, CheckLink, AppendableLink, OneItemLink, \
 from ..belt import InstallerWizard, generateTweakLines
 from ..bolt import GPath, deprint, SubProgress, LogFile, formatInteger, \
     round_size
-from ..exceptions import CancelError, SkipError, StateError
+from ..exception import CancelError, SkipError, StateError
 
 __all__ = ['Installer_Open', 'Installer_Duplicate', 'InstallerOpenAt_MainMenu',
            'Installer_OpenSearch', 'Installer_OpenTESA',

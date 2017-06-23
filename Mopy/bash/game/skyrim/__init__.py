@@ -45,7 +45,7 @@ from .records import MreCell, MreWrld, MreFact, MreAchr, MreDial, MreInfo, \
     MreLcrt, MreStat, MreAmmo, MreSmqn, MreImad, MreSoun, MreAvif, MreCont, \
     MreIpct, MreAspc, MreRela, MreEfsh, MreSnct, MreOtft
 from ...brec import MreGlob, BaseRecordHeader
-from ...exceptions import ModError
+from ...exception import ModError
 
 #--Name of the game to use in UI.
 displayName = u'Skyrim'

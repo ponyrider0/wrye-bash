@@ -28,7 +28,7 @@ for game settings."""
 from ... import bush # for game
 from ...bolt import SubProgress, deprint
 from ...brec import MreRecord, ModReader
-from ...exceptions import StateError
+from ...exception import StateError
 from ...patcher.patchers.base import MultiTweakItem, CBash_MultiTweakItem
 from ...patcher.patchers.base import MultiTweaker, CBash_MultiTweaker
 from ...patcher.base import AMultiTweaker

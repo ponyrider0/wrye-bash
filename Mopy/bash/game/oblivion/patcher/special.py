@@ -32,7 +32,7 @@ from ....bass import null4
 # from  bush import  genericAVEffects
 from .... import bush, bosh, load_order
 from ....cint import MGEFCode, FormID
-from ....exceptions import StateError
+from ....exception import StateError
 from ....patcher.base import Patcher, CBash_Patcher
 from ....patcher.patchers.base import SpecialPatcher, ListPatcher, \
     CBash_ListPatcher

@@ -30,7 +30,7 @@ import stat
 import struct
 import shutil as _shutil
 from bolt import GPath, deprint, Path, decode
-from exceptions import BoltError, CancelError, SkipError, AccessDeniedError, \
+from exception import BoltError, CancelError, SkipError, AccessDeniedError, \
     DirectoryFileCollisionError, InvalidPathsError, FileOperationError, \
     NonExistentDriveError
 

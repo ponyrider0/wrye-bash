@@ -33,7 +33,7 @@ from ..bolt import Flags, sio, GPath, decode, deprint, encode, \
     cstrip, SubProgress
 from ..brec import ModReader, MreRecord, ModWriter, getObjectIndex, \
     getFormIndices
-from ..exceptions import FileError, ModError, StateError
+from ..exception import FileError, ModError, StateError
 from ..parsers import LoadFactory, ModFile
 
 #------------------------------------------------------------------------------

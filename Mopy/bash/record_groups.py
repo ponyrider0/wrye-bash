@@ -31,7 +31,7 @@ from brec import ModReader
 from bolt import sio
 import bush # for groupTypes
 import bosh # for modInfos
-from exceptions import AbstractError, ArgumentError, ModError
+from exception import AbstractError, ArgumentError, ModError
 
 class MobBase(object):
     """Group of records and/or subgroups. This basic implementation does not
