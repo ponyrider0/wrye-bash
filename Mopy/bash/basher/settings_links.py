@@ -24,10 +24,10 @@
 
 import locale
 import sys
-import wx
-from ..balt import ItemLink, vSizer, hSizer, hspacer, Button, AppendableLink, \
+from ..balt import ItemLink, Button, AppendableLink, \
     RadioLink, CheckLink, MenuLink, TransLink, EnabledLink, BoolLink, \
-    StaticText, tooltip, Link, staticBitmap, hspace
+    StaticText, tooltip, Link, staticBitmap, VLayout, HLayout, Stretch, \
+    LayoutOptions, Spacer
 from .. import barb, bush, balt, bass, bolt, env, exception
 from ..bolt import deprint, GPath
 from . import BashFrame, BashStatusBar
@@ -60,21 +60,20 @@ class Settings_BackupSettings(ItemLink):
         BashFrame.SaveSettings(Link.Frame)
         dialog = balt.Dialog(Link.Frame,_(u'Backup Images?'),size=(400,200))
         icon = staticBitmap(dialog)
-        sizer = vSizer(
-            (hSizer((icon,0,wx.ALL,6), hspace(6),
-                    (StaticText(dialog,_(u'Do you want to backup any images?'),
-                                noAutoResize=True),1,wx.EXPAND),
-                    ),1,wx.EXPAND|wx.ALL,6),
-            (hSizer(hspacer,
-                    Button(dialog, label=_(u'Backup All Images'),
-                           onButClick=lambda: dialog.EndModal(2)), hspace(),
-                    Button(dialog, label=_(u'Backup Changed Images'),
-                           onButClick=lambda: dialog.EndModal(1)), hspace(),
-                    Button(dialog, label=_(u'None'),
-                           onButClick=lambda: dialog.EndModal(0)),
-                    ),0,wx.EXPAND|wx.ALL^wx.TOP,6),
-            )
-        dialog.SetSizer(sizer)
+        def _btn(title, return_code):
+            return Button(dialog, label=title,
+                          onButClick=lambda: dialog.EndModal(return_code))
+        VLayout(default_fill=True, default_border=6, items=[
+            HLayout(spacing=6, default_fill=True, items=[
+                icon,
+                (StaticText(dialog,_(u'Do you want to backup any images?'),
+                            noAutoResize=True), LayoutOptions(weight=1))]),
+            Spacer(60), Stretch(),
+            HLayout(spacing=6, items=[
+                _btn(_(u'Backup All Images'), 2),
+                _btn(_(u'Backup Changed Images'), 1),
+                _btn(_(u'None'), 0)])
+        ]).apply_to(dialog)
         with dialog: images = dialog.ShowModal()
         with balt.BusyCursor():
             backup = barb.BackupSettings(Link.Frame,backup_images=images)
