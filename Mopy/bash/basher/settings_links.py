@@ -26,8 +26,8 @@ import locale
 import sys
 from ..balt import ItemLink, Button, AppendableLink, \
     RadioLink, CheckLink, MenuLink, TransLink, EnabledLink, BoolLink, \
-    StaticText, tooltip, Link, staticBitmap, VLayout, HLayout, Stretch, \
-    LayoutOptions, Spacer
+    StaticText, tooltip, Link, staticBitmap
+from ..gui.layouts import HLayout, VLayout, LayoutOptions, Spacer, Stretch
 from .. import barb, bush, balt, bass, bolt, env, exception
 from ..bolt import deprint, GPath
 from . import BashFrame, BashStatusBar

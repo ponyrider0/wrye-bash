@@ -34,8 +34,9 @@ from operator import attrgetter
 from .. import bass, bosh, bolt, balt, bush, parsers, load_order
 from ..balt import ItemLink, Link, TextCtrl, StaticText, CheckLink, \
     EnabledLink, AppendableLink, TransLink, RadioLink, SeparatorLink, \
-    ChoiceLink, OneItemLink, Image, ListBoxes, OkButton, VLayout, HLayout, \
-    CancelButton, LayoutOptions, Spacer, Stretch, checkBox
+    ChoiceLink, OneItemLink, Image, ListBoxes, OkButton, CancelButton, checkBox
+from ..gui.layouts import HLayout, VLayout, LayoutOptions, Spacer, Stretch, \
+    RIGHT
 from ..bolt import GPath, SubProgress, formatDate
 from ..bosh import faces
 from ..patcher import configIsCBash, exportConfig, patch_files
@@ -1978,7 +1979,7 @@ class Mod_Scripts_Export(_Mod_Export_Link):
             Stretch(),
             (HLayout(spacing=4, items=[
                 OkButton(dialog,onButClick=OnOk), CancelButton(dialog)]),
-             LayoutOptions(h_align=balt.RIGHT))
+             LayoutOptions(h_align=RIGHT))
         ]).apply_to(dialog)
         with dialog: questions = dialog.ShowModal()
         if questions != 1: return #because for some reason cancel/close dialogue is returning 5101!
