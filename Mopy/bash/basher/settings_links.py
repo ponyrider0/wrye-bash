@@ -24,10 +24,11 @@
 
 import locale
 import sys
-from ..balt import ItemLink, Button, AppendableLink, \
+from ..balt import ItemLink, AppendableLink, \
     RadioLink, CheckLink, MenuLink, TransLink, EnabledLink, BoolLink, \
     StaticText, tooltip, Link, staticBitmap
 from ..gui.layouts import HLayout, VLayout, LayoutOptions, Spacer, Stretch
+from ..gui import Button
 from .. import barb, bush, balt, bass, bolt, env, exception
 from ..bolt import deprint, GPath
 from . import BashFrame, BashStatusBar
@@ -62,7 +63,7 @@ class Settings_BackupSettings(ItemLink):
         icon = staticBitmap(dialog)
         def _btn(title, return_code):
             return Button(dialog, label=title,
-                          onButClick=lambda: dialog.EndModal(return_code))
+                          on_click=lambda: dialog.EndModal(return_code))
         VLayout(default_fill=True, default_border=6, items=[
             HLayout(spacing=6, default_fill=True, items=[
                 icon,

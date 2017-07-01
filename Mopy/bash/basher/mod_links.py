@@ -34,9 +34,10 @@ from operator import attrgetter
 from .. import bass, bosh, bolt, balt, bush, parsers, load_order
 from ..balt import ItemLink, Link, TextCtrl, StaticText, CheckLink, \
     EnabledLink, AppendableLink, TransLink, RadioLink, SeparatorLink, \
-    ChoiceLink, OneItemLink, Image, ListBoxes, OkButton, CancelButton, checkBox
+    ChoiceLink, OneItemLink, Image, ListBoxes, checkBox
 from ..gui.layouts import HLayout, VLayout, LayoutOptions, Spacer, Stretch, \
     RIGHT
+from ..gui import OkButton, CancelButton
 from ..bolt import GPath, SubProgress, formatDate
 from ..bosh import faces
 from ..patcher import configIsCBash, exportConfig, patch_files
@@ -1978,7 +1979,7 @@ class Mod_Scripts_Export(_Mod_Export_Link):
             gskipcomments,
             Stretch(),
             (HLayout(spacing=4, items=[
-                OkButton(dialog,onButClick=OnOk), CancelButton(dialog)]),
+                OkButton(dialog, on_click=OnOk), CancelButton(dialog)]),
              LayoutOptions(h_align=RIGHT))
         ]).apply_to(dialog)
         with dialog: questions = dialog.ShowModal()
