@@ -32,12 +32,12 @@ import os
 import time
 from operator import attrgetter
 from .. import bass, bosh, bolt, balt, bush, parsers, load_order
-from ..balt import ItemLink, Link, TextCtrl, StaticText, CheckLink, \
+from ..balt import ItemLink, Link, StaticText, CheckLink, \
     EnabledLink, AppendableLink, TransLink, RadioLink, SeparatorLink, \
     ChoiceLink, OneItemLink, Image, ListBoxes
 from ..gui.layouts import HLayout, VLayout, LayoutOptions, Spacer, Stretch, \
     RIGHT
-from ..gui import OkButton, CancelButton, CheckBox
+from ..gui import OkButton, CancelButton, CheckBox, TextField
 from ..bolt import GPath, SubProgress, formatDate
 from ..bosh import faces
 from ..patcher import configIsCBash, exportConfig, patch_files
@@ -1953,17 +1953,17 @@ class Mod_Scripts_Export(_Mod_Export_Link):
         defaultPath = bass.dirs['patches'].join(fileName.s + u' Exported Scripts')
         def OnOk():
             dialog.EndModal(1)
-            bass.settings['bash.mods.export.deprefix'] = gdeprefix.GetValue().strip()
-            bass.settings['bash.mods.export.skip'] = gskip.GetValue().strip()
+            bass.settings['bash.mods.export.deprefix'] = gdeprefix.text.strip()
+            bass.settings['bash.mods.export.skip'] = gskip.text.strip()
             bass.settings['bash.mods.export.skipcomments'] = gskipcomments.checked
         dialog = balt.Dialog(Link.Frame, _(u'Export Scripts Options'),
                              size=(400, 180), resize=False)
-        gskip = TextCtrl(dialog)
-        gdeprefix = TextCtrl(dialog)
+        gskip = TextField(dialog)
+        gdeprefix = TextField(dialog)
         gskipcomments = CheckBox(dialog, _(u'Filter Out Comments'),
                 tooltip=_(u"If active doesn't export comments in the scripts"))
-        gskip.SetValue(bass.settings['bash.mods.export.skip'])
-        gdeprefix.SetValue(bass.settings['bash.mods.export.deprefix'])
+        gskip.text = bass.settings['bash.mods.export.skip']
+        gdeprefix.text = bass.settings['bash.mods.export.deprefix']
         gskipcomments.checked = bass.settings['bash.mods.export.skipcomments']
         VLayout(border=6, spacing=4, items=[
             StaticText(dialog, _(u"Skip prefix (leave blank to not skip any), non-case sensitive):"),
