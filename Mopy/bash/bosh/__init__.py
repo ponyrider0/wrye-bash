@@ -4055,7 +4055,7 @@ class Installer(object):
         ur'(' +ur'|'.join(docExts) + ur')$', re.I | re.U)
     skipExts = {u'.exe', u'.py', u'.pyc', u'.7z', u'.zip', u'.rar', u'.db',
                 u'.ace', u'.tgz', u'.tar', u'.gz', u'.bz2', u'.omod',
-                u'.fomod', u'.tb2', u'.lzma', u'.manifest'}
+                u'.fomod', u'.tb2', u'.lzma', u'.manifest', u'.tmp', u'.temp'} #workaround1: skip temp files
     skipExts.update(set(readExts))
     scriptExts = {u'.txt', u'.ini', u'.cfg'}
     commonlyEditedExts = scriptExts | {u'.xml'}
