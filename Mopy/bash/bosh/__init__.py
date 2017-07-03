@@ -5997,6 +5997,8 @@ class InstallersData(_DataStore):
             newSDirs = (x for x in newSDirs if x.lower() != u'docs')
         newSDirs = (x for x in newSDirs if
                     x.lower() not in bush.game.SkipBAINRefresh)
+        newSDirs = (x for x in newSDirs if
+                    x[x.rfind(u'.'):].lower() not in Installer.skipExts) #workaround 3: skip dirs with blacklisted extensions
         sDirs[:] = [x for x in newSDirs]
         if log:
             log.write(u'(in refreshSizeCRCDate after accounting for skipping) '
