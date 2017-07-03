@@ -2849,8 +2849,8 @@ class InstallersPanel(BashTab):
         refresh_ui = [False]
         try:
             self.refreshing = True
-#            self._refresh_installers_if_needed(refresh_ui, canCancel, #workaround2: disable automatic installers refresh
-#                                               fullRefresh, scan_data_dir)
+            self._refresh_installers_if_needed(refresh_ui, canCancel,
+                                               fullRefresh, scan_data_dir)
             if refresh_ui[0]: self.uiList.RefreshUI(focus_list=False)
             super(InstallersPanel, self).ShowPanel()
         finally:
