@@ -1,7 +1,6 @@
 * text=auto
 
 *.py text diff=python
-*.html text
 .project text
 
 # M$ files
